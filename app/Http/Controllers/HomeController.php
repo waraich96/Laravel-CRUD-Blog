@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
     /**
@@ -14,6 +15,7 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Show the application dashboard.
      *
@@ -24,8 +26,14 @@ class HomeController extends Controller
         if ($request->user()->hasRole('user')) {
             return redirect('/');
         }
+
         if ($request->user()->hasRole('admin')) {
             return redirect('/admin/dashboard');
         }
+
+        if ($request->user()->hasRole('writer')) {
+            return redirect('/admin/dashboard');
+        }
+
     }
 }
