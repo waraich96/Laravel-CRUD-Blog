@@ -34,6 +34,9 @@
                          <a class="nav-link" href="{{ url('/home') }}">Home</a>
                     </li>
                     <li class="nav-item">
+                         <a class="nav-link" href="{{ route('posts') }}">News</a>
+                    </li>
+                    <li class="nav-item">
                       <a class="nav-link" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
@@ -45,6 +48,9 @@
                      </li>
                      @else
                      <li class="nav-item">
+                         <a class="nav-link" href="{{ route('posts') }}">News</a>
+                    </li>
+                    <li class="nav-item">
                          <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
                      <li class="nav-item">

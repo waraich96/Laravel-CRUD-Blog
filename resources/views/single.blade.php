@@ -18,7 +18,9 @@
 @auth
 <Comments 
     :post-id='@json($post->id)' 
-    :user-name='@json(auth()->user()->name)'>
+    :user-name='@json(auth()->user()->name)'
+    :user-id='@json(auth()->user()->id)'
+    :user-role = '@json(auth()->user()->roles()->first()->name)'>
 </Comments>
 @endauth
 </div>

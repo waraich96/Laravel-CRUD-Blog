@@ -12,6 +12,7 @@ class PostResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
     public function toArray($request)
     {
         return [
@@ -21,7 +22,6 @@ class PostResource extends JsonResource
             'image' => $this->image,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
-            'user_id' => $this->user_id,
         ];
     }
 }

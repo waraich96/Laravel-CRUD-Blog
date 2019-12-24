@@ -1,6 +1,49 @@
 <template>
     <div id="posts">
-
+        <p class="border p-3" v-for="post in posts" v-if="post.user_id === userId && userRole !== 'admin'">
+                {{ post.title}}
+        
+            <router-link :to="{ name: 'update', params: { postId : post.id } }">
+                <button type="button" class="p-1 mx-3 float-right btn btn-light">
+                    Update
+                    
+                </button>
+            </router-link>
+            <button 
+                type="button" 
+                @click="deletePost(post.id)" 
+                class="p-1 mx-3 float-right btn btn-danger"
+            >
+                Delete
+            </button>
+        </p>
+        <div v-if="userRole !== 'admin'">
+          <h3>Admin's can only delete posts. Feel free to create a post using the 'New Post' Button.</h3>
+          <router-link :to="{ name: 'create', params: { userId } }">
+                <button type="button" class="p-1 mx-3 btn btn-light">
+                    NEW POST
+                    
+                </button>
+            </router-link>
+        </div>
+    
+    <div v-if="userRole === 'admin'">
+    <p class="border p-3" v-for="post in posts">
+            {{ post.title}}
+            <router-link :to="{ name: 'update', params: { postId : post.id } }">
+                <button type="button" class="p-1 mx-3 float-right btn btn-light">
+                    Update
+                    
+                </button>
+            </router-link>
+            <button 
+                type="button" 
+                @click="deletePost(post.id)" 
+                class="p-1 mx-3 float-right btn btn-danger"
+            >
+                Delete
+            </button>
+        </p>
         <div>
             <button 
                 v-if="next" 
@@ -20,7 +63,11 @@
             </button>
         </div>
     </div>
+
+  </div>
 </template>
+
+
 
 <script>
 export default {
@@ -31,7 +78,11 @@ export default {
     userId: {
         type: Number,
         required: true
-    }
+    },
+    userRole: {
+        type: String,
+        required: true
+    },
     },
   data() {
     return {

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Post;
 use Illuminate\Http\Request;
-use App\Http\Resources\PostResource;
+
+use GuzzleHttp\Client;
 
 class PostController extends Controller
 {
@@ -13,9 +15,48 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    protected $client;
+
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+
+    public function costumPosts()
+    {
+        $posts = $this->endpointRequest('/posts');
+        return view('otherPosts', compact('posts')); 
+    }
+
+    public function findById($id)
+    {
+        return $this->endpointRequest('/posts/'.$id);
+    }
+
+    public function endpointRequest($url)
+    {
+        try {
+            $response = $this->client->request('GET', $url);
+        } catch (\Exception $e) {
+            return [];
+        }
+
+        return $this->response_handler($response->getBody()->getContents());
+    }
+
+    public function response_handler($response)
+    {
+        if ($response) {
+            return json_decode($response);
+        }
+        
+        return [];
+    }
+
+
     public function index()
     {
-        //
         return PostResource::collection(Post::latest()->paginate(5));
     }
 
@@ -35,20 +76,21 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
-            'user_id' => 'required',            
+            'user_id' => 'required',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        $post = new Post;
+        $post = new Post();
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name = str_slug($request->title).'.'.$image->getClientOriginalExtension();
+            $name = str_slug($request->title) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/uploads/posts');
             $imagePath = $destinationPath . "/" . $name;
             $image->move($destinationPath, $name);
@@ -69,6 +111,7 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
+
     public function show(Post $post)
     {
         return new PostResource($post);
@@ -92,6 +135,7 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Post $post)
     {
         $this->validate($request, [
@@ -100,7 +144,6 @@ class PostController extends Controller
         ]);
 
         $post->update($request->only(['title', 'body']));
-
         return new PostResource($post);
     }
 
@@ -110,19 +153,19 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
+
     public function destroy(Post $post)
     {
         $post->delete();
-
         return response()->json(null, 204);
     }
 
     public function all()
     {
-        return view('landing', [
-            'posts' => Post::latest()->paginate(5)
-        ]);
+        $posts = Post::latest()->paginate(5);
+        return view('landing', compact('posts'));
     }
+
 
     public function single(Post $post)
     {
