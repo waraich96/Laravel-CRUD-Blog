@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Post;
 use Illuminate\Http\Request;
-
 use GuzzleHttp\Client;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +21,7 @@ class PostController extends Controller
     public function __construct(Client $client)
     {
         $this->client = $client;
+
     }
 
     public function costumPosts()
@@ -55,9 +56,17 @@ class PostController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        return PostResource::collection(Post::latest()->paginate(5));
+        $user = auth()->user()->roles()->first()->name;
+        if($user == "writer"){
+            $posts = Post::where('user_id',auth()->user()->id)->paginate(5);
+            return PostResource::collection($posts);
+        }else{
+            $posts = Post::latest()->paginate(5);
+            return PostResource::collection($posts);
+        }
+        
     }
 
     /**
@@ -112,8 +121,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show(Post $post)
+    public function show($id)
     {
+        $post = Post::find($id);
         return new PostResource($post);
     }
 
@@ -136,13 +146,13 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
         ]);
-
+        $post = Post::find($id);
         $post->update($request->only(['title', 'body']));
         return new PostResource($post);
     }
@@ -154,8 +164,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Post $post)
+    public function destroy($id)
     {
+        $post = Post::find($id);
         $post->delete();
         return response()->json(null, 204);
     }

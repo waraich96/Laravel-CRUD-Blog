@@ -11,6 +11,8 @@
 |
  */
 
+
+
 Route::get('/', 'PostController@all');
 
 Route::get('/posts/{post}', 'PostController@single');
@@ -25,3 +27,13 @@ Route::get('/admin/{any}', 'AdminController@index')->where('any', '.*');
 
 Route::get('/{post}/comments', 'CommentController@index');
 Route::post('/{post}/comments', 'CommentController@store');
+
+
+
+Route::prefix('api')->middleware('auth')->group(function () {
+    Route::get('posts', 'PostController@index');
+    Route::get('posts/{id}', 'PostController@show');
+    Route::post('posts', 'PostController@store');
+    Route::post('editPost/{id}', 'PostController@update');
+    Route::delete('posts/{id}', 'PostController@destroy');
+});
