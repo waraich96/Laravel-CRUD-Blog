@@ -411,6 +411,8 @@ class ComposerStaticInitf93af05d51132071bbcd25ae9ec5ddbd
     );
 
     public static $classMap = array (
+        'AccountTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AccountTableSeeder.php',
+        'App\\Account' => __DIR__ . '/../..' . '/app/Account.php',
         'App\\Comment' => __DIR__ . '/../..' . '/app/Comment.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\CommentSent' => __DIR__ . '/../..' . '/app/Events/CommentSent.php',

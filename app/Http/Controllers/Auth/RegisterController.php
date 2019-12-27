@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 use App\Role;
+use App\Account;
 
 use App\Http\Controllers\Controller;
 use App\User;
@@ -72,6 +73,7 @@ class RegisterController extends Controller
         ]);
 
         $user->roles()->attach(Role::where('name', 'user')->first());
+        $user->account()->save(factory(Account::class)->make());
         return $user;
 
     }

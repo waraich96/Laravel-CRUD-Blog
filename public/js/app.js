@@ -2381,7 +2381,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var title = this.$refs.title.value;
       var body = this.$refs.body.value;
-      axios.put('/api/posts/' + this.postId, {
+      axios.post('/api/editPost/' + this.postId, {
         title: title,
         body: body
       }).then(function (response) {
@@ -48780,7 +48780,7 @@ var render = function() {
           : _vm._e()
       }),
       _vm._v(" "),
-      _vm.userRole !== "admin"
+      _vm.userRole === "user"
         ? _c(
             "div",
             [
@@ -48817,7 +48817,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.userRole === "admin"
+      _vm.userRole === "admin" || _vm.userRole === "writer"
         ? _c(
             "div",
             [
