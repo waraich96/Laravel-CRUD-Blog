@@ -24,7 +24,7 @@ class PostController extends Controller
 
     }
 
-    public function costumPosts()
+    public function customPosts()
     {
         $posts = $this->endpointRequest('/posts');
         return view('otherPosts', compact('posts')); 

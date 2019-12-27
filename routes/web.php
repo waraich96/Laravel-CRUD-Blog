@@ -20,7 +20,7 @@ Route::get('/posts/{post}', 'PostController@single');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/posts', 'PostController@costumPosts')->name('posts');
+Route::get('/posts', 'PostController@customPosts')->name('posts');
 
 Route::get('/admin/{any}', 'AdminController@index')->where('any', '.*');
 

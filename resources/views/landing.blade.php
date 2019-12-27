@@ -16,7 +16,7 @@
       </div>
       <div class="card-footer text-muted">
         Posted {{ $post->created_at->diffForHumans() }} by
-        <a href="#">{{ $post->user->name }} </a>
+        <a href="#">{{ $post->user->name }} ({{ $post->user->account->account_number }})</a> 
       </div>
     </div>
     @endforeach
