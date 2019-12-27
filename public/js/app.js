@@ -2249,33 +2249,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.getPosts();
@@ -48723,193 +48696,96 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { attrs: { id: "posts" } },
-    [
-      _vm._l(_vm.posts, function(post) {
-        return post.user_id === _vm.userId && _vm.userRole !== "admin"
-          ? _c(
-              "p",
-              { staticClass: "border p-3" },
-              [
-                _vm._v(
-                  "\n              " +
-                    _vm._s(post.title) +
-                    "\n      \n          "
-                ),
-                _c(
-                  "router-link",
-                  {
-                    attrs: {
-                      to: { name: "update", params: { postId: post.id } }
-                    }
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "p-1 mx-3 float-right btn btn-light",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                  Update\n                  \n              "
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "p-1 mx-3 float-right btn btn-danger",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.deletePost(post.id)
-                      }
-                    }
-                  },
-                  [_vm._v("\n              Delete\n          ")]
-                )
-              ],
-              1
-            )
-          : _vm._e()
-      }),
-      _vm._v(" "),
-      _vm.userRole === "user"
-        ? _c(
-            "div",
-            [
-              _c("h3", [
-                _vm._v(
-                  "Admin's can only delete posts. Feel free to create a post using the 'New Post' Button."
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: { name: "create", params: { userId: _vm.userId } }
-                  }
-                },
+  return _c("div", { attrs: { id: "posts" } }, [
+    _vm.userRole === "admin" || _vm.userRole === "writer"
+      ? _c(
+          "div",
+          [
+            _vm._l(_vm.posts, function(post) {
+              return _c(
+                "p",
+                { staticClass: "border p-3" },
                 [
+                  _vm._v("\n          " + _vm._s(post.title) + "\n          "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: { name: "update", params: { postId: post.id } }
+                      }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "p-1 mx-3 float-right btn btn-light",
+                          attrs: { type: "button" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                  Update\n                  \n              "
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c(
                     "button",
                     {
-                      staticClass: "p-1 mx-3 btn btn-light",
-                      attrs: { type: "button" }
+                      staticClass: "p-1 mx-3 float-right btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deletePost(post.id)
+                        }
+                      }
                     },
-                    [
-                      _vm._v(
-                        "\n                  NEW POST\n                  \n              "
-                      )
-                    ]
+                    [_vm._v("\n              Delete\n          ")]
                   )
-                ]
+                ],
+                1
               )
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.userRole === "admin" || _vm.userRole === "writer"
-        ? _c(
-            "div",
-            [
-              _vm._l(_vm.posts, function(post) {
-                return _c(
-                  "p",
-                  { staticClass: "border p-3" },
-                  [
-                    _vm._v(
-                      "\n          " + _vm._s(post.title) + "\n          "
-                    ),
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: { name: "update", params: { postId: post.id } }
+            }),
+            _vm._v(" "),
+            _c("div", [
+              _vm.next
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "m-3 btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.navigate(_vm.next)
                         }
-                      },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "p-1 mx-3 float-right btn btn-light",
-                            attrs: { type: "button" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                  Update\n                  \n              "
-                            )
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "p-1 mx-3 float-right btn btn-danger",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deletePost(post.id)
-                          }
-                        }
-                      },
-                      [_vm._v("\n              Delete\n          ")]
-                    )
-                  ],
-                  1
-                )
-              }),
+                      }
+                    },
+                    [_vm._v("\n            Next\n          ")]
+                  )
+                : _vm._e(),
               _vm._v(" "),
-              _c("div", [
-                _vm.next
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "m-3 btn btn-primary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.navigate(_vm.next)
-                          }
+              _vm.prev
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "m-3 btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.navigate(_vm.prev)
                         }
-                      },
-                      [_vm._v("\n            Next\n          ")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.prev
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "m-3 btn btn-primary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.navigate(_vm.prev)
-                          }
-                        }
-                      },
-                      [_vm._v("\n            Previous\n          ")]
-                    )
-                  : _vm._e()
-              ])
-            ],
-            2
-          )
-        : _vm._e()
-    ],
-    2
-  )
+                      }
+                    },
+                    [_vm._v("\n            Previous\n          ")]
+                  )
+                : _vm._e()
+            ])
+          ],
+          2
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
